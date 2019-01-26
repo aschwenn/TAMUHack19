@@ -1,0 +1,31 @@
+# GIT COMMANDS
+
+# Create a folder for TAMUHack19
+# Open Git Bash
+# Navigate to directory using 'cd'
+git clone https://github.com/aschwenn/TAMUHack19.git
+
+# Check status of local repository
+git status
+
+# Add all files to be staged to be commited
+git add .
+
+# Create a commit on your machine
+git commit -m 'your comments here'
+
+# Push changes to remote repository (GitHub)
+git push origin master
+
+# Pull new changes from remote repository
+git pull origin master
+
+# ALWAYS check status and pull any changes before attempting to push a commit
+# If you accidentally made changes that you don't want to commit, use:
+git stash
+
+
+
+# NODE/NPM
+# NPM is the Node package manager needed for running the backend/frontend
+https://nodejs.org/en/
