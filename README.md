@@ -11,4 +11,4 @@
 
 testing....
 
-[logo]: https://brandguide.tamu.edu/assets/img/logos/tam-box-logo.png "Texas A&M University"
+[logo]: https://cdn.d1baseball.com/logos/teams/256/texasam.png "Texas A&M University"
