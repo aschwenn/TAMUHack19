@@ -1,0 +1,78 @@
+/* "Current" classes for the scheduler */
+Classes {
+	id: int, primary key, not null, auto-increment
+	name: varchar, not null
+	dept: varchar, not null
+	courseNo: int, not null
+	sections: list of ints --list of keys from Sections table
+	description: varchar
+	term: varchar, not null
+	registrationPeriod: varchar
+	graduate: boolean, not null
+	undergraduate: boolean, not null
+	campus: varchar
+}
+
+Sections {
+	id: int, primary key, not null, auto-increment
+	section: int, not null
+	crn: int, not null
+	honors: boolean, not null
+	instructorPrimary: int --id from Professors table
+	instructorsSecondary: list of ints --id from Professors table
+	attributes: list of varchars
+	type: varchar
+	instructionalMethod: varchar
+	credits: int
+	meetingTimes: list of ints --list of keys from MeetingTimes table
+}
+
+MeetingTimes {
+	id: int, primary key, not null, auto-increment
+	type: varchar
+	startTime: varchar
+	endTime: varchar
+	days: list of varchar
+	location: varchar
+	dateRange: varchar
+	instructor: varchar --instructor for this specific meeting time (prof, TA, etc)
+}
+
+/* Historical classes for analytics */
+PrevClasses {
+	id: int, primary key, not null, auto-increment
+	name: varchar, not null
+	dept: varchar, not null
+	courseNo: int, not null
+	sections: list of ints --list of keys from PrevSections table
+	term: varchar, not null
+	campus: varchar
+}
+
+PrevSections {
+	id: int, primary key, not null, auto-increment
+	section: int, not null
+	honors: boolean, not null
+	instructorPrimary: int, not null --id from Professors table
+	instructorsSecondary: list of ints, not null --id from Professors table
+	A: int, not null
+	B: int, not null
+	C: int, not null
+	D: int, not null
+	F: int, not null
+	GPA: float, not null
+	I: int, not null
+	S: int, not null
+	U: int, not null
+	Q: int, not null
+	X: int, not null
+	total: int, not null
+	term: varchar, not null
+}
+
+Professors {
+	id: int, primary key, not null, auto-increment
+	firstName: varchar
+	middleName: varchar
+	lastName: varchar
+}
