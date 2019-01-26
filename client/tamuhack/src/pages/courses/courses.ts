@@ -7,8 +7,15 @@ import { NavController } from 'ionic-angular';
 })
 export class CoursesPage {
 
+  courseno: string = '';
+  dept: string = '';
+
   constructor(public navCtrl: NavController) {
 
+  }
+
+  searchClass(){
+    console.log('Searched for: ' + this.dept + this.courseno);
   }
 
 }
