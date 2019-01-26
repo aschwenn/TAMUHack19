@@ -1,3 +1,16 @@
-page-contact {
+page-courses {
+    .item-ios {
+        background-color: rgba(255,255,255,0.7) !important;
+        padding-left: 5%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+    }
 
+    .submit {
+        background-color: rgba(0,0,0,0.5) !important;
+    }
+
+    .submit:active, .submit:hover {
+        background-color: rgba(0,0,0,0.8) !important;
+    }
 }
