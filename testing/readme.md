@@ -15,3 +15,27 @@ Install instructions (if you want to mess around with PDF parsing):
         doc = slate.PDF(f)
         print(doc)
     ```
+
+## PDF Parsing (PyPDF2)
+  1. pip install PyPDF2
+  2. Example code:
+  * ```python
+    from PyPDF2 import PdfFileReader
+
+    def parsePDF(path):
+        with open(path, 'rb') as f:
+            pdf = PdfFileReader(f)
+            page = pdf.getPage(0)
+            print(page)
+            print('Page type : {}'.format(str(type(page))))
+
+            text = page.extractText()
+            print(text)
+
+    if __name__ == '__main__':
+        path = 'grd20181EN.pdf'
+        parsePDF(path)
+    ```
+### Regex Expression Testing:
+   * DEPARTMENT-COURSE-SECTION: /([A-Z]{4}-[0-9]{3}-[0-9]{3})+/ 
+   * Grades(A-B-C-D-F-TOTAL): /(?<![-\.]|[0-9])([0-9]{1,3}(?![-\%\.\d]))/
