@@ -29,6 +29,8 @@ git stash
 # NODE/NPM
 # NPM is the Node package manager needed for running the backend/frontend
 https://nodejs.org/en/
+# Ionic
+npm install -g ionic@4.0.0
 
 
 # VIM
