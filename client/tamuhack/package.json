@@ -27,6 +27,7 @@
     "@ionic/storage": "2.2.0",
     "body-parser": "^1.18.3",
     "cordova-plugin-advanced-http": "2.0.4",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",

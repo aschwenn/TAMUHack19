@@ -7,10 +7,12 @@ import { ProfsPage } from '../pages/profs/profs';
 import { CoursesPage } from '../pages/courses/courses';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { CoursePage } from '../pages/course/course';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpClientModule } from '@angular/common/http';
+import { AlertController } from 'ionic-angular';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProfsPage,
     CoursesPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CoursePage,
   ],
   imports: [
     BrowserModule,
@@ -31,11 +34,13 @@ import { HttpClientModule } from '@angular/common/http';
     ProfsPage,
     CoursesPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    CoursePage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    AlertController,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
