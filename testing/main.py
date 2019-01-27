@@ -37,7 +37,7 @@ def isNotEmpty(text):
 
 def cleanText(text):
     # Remove Course Total statistics
-    regex = "(COURSE TOTAL:[\s\S]*?(?=[A-Z]))|(DEPARTMENT TOTAL:)"
+    regex = "(COURSE TOTAL:[\s\S]*?(?=[A-Z]))|(DEPARTMENT TOTAL:[\s\S]*(?![A-Z]))"
     output = re.sub(regex, '', text)
     regex = "([0-9]+\.[0-9]+[%]\\n)"
     output = re.sub(regex, '', output)
@@ -69,9 +69,9 @@ def extractGPA(text):
     return output
 
 def extractProf(text):
-    regex = "(?!\\n)[A-Z\s]+(?=\\n)"
+    regex = "(?<=\\n)[A-Z ]+(?=\\n)"
     output = re.findall(regex, text)
-    # print(output)
+    print(output)
     return output
 
 def outputCSV(profs, courses, grades, gpa):
