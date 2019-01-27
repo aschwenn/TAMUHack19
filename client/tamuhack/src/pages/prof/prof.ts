@@ -1,20 +1,18 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { CoursesPage } from '../courses/courses';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+import { ProfsPage } from '../profs/profs';
 
 @IonicPage()
 @Component({
-  selector: 'page-course',
-  templateUrl: 'course.html',
+  selector: 'page-prof',
+  templateUrl: 'prof.html',
 })
-export class CoursePage {
+export class ProfPage {
 
-  course: string = CoursesPage.courseExternal;
-  data: any = CoursesPage.dataExternal;
+  first: string = ProfsPage.firstExternal;
+  last: string = ProfsPage.lastExternal;
+  data: any = ProfsPage.dataExternal;
   newData: any = {};
-  test = 1;
-  test2 = '2';
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.parseData();
@@ -26,9 +24,9 @@ export class CoursePage {
       let exists = false;
       let existsIndex = 0;
       for(let j = 0; j < consolidated.length; j++){
-        if(true){
-          if(this.data[i].prof_firstname == consolidated[j].prof_firstname){
-            if(this.data[i].prof_lastname == consolidated[j].prof_lastname){
+        if(this.data[i].term == consolidated[j].term){
+          if(this.data[i].course == consolidated[j].course){
+            if(this.data[i].dept == consolidated[j].dept){
               exists = true;
               existsIndex = j;
               break;
@@ -46,9 +44,7 @@ export class CoursePage {
           }
           insertIndex += 1;
         }
-        let temp = this.data[i];
-        temp.term = 1;
-        consolidated.splice(insertIndex, 0, temp);
+        consolidated.splice(insertIndex, 0, this.data[i]);
       }
       else{
         let temp = this.data[i];
@@ -73,7 +69,6 @@ export class CoursePage {
         consolidated[existsIndex].U += temp.U;
         consolidated[existsIndex].Q += temp.Q;
         consolidated[existsIndex].X += temp.X;
-        consolidated[existsIndex].term += 1; // increment term -- use as number of sections taught
       }
     }
 
@@ -88,10 +83,6 @@ export class CoursePage {
 
   totalStudents(sec): number {
     return sec.A + sec.B + sec.C + sec.D + sec.F + sec.I + sec.S + sec.U + sec.Q + sec.X;
-  }
-
-  truncate(term: string): string {
-    return term.substring(0,4);
   }
 
 }

@@ -8,6 +8,7 @@ import { CoursesPage } from '../pages/courses/courses';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CoursePage } from '../pages/course/course';
+import { ProfPage } from '../pages/prof/prof';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -22,6 +23,7 @@ import { AlertController } from 'ionic-angular';
     HomePage,
     TabsPage,
     CoursePage,
+    ProfPage,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,7 @@ import { AlertController } from 'ionic-angular';
     HomePage,
     TabsPage,
     CoursePage,
+    ProfPage,
   ],
   providers: [
     StatusBar,
