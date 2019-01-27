@@ -42,7 +42,7 @@ Install instructions (if you want to mess around with PDF parsing):
         regexGrades = "/(?<![-\.]|[0-9])([0-9]{1,3}(?![-\d]))/"
         regexGPA = "/[0-9]{1}\.[0-9]{3}/"
         regexProfessors = "/(?!\\n)[A-Z\s]+(?=\\n)/"
-        regexCleanTotalCourse = "/(COURSE TOTAL:[\s\S]*?(?=[A-Z]))/"
+        regexCleanTotalCourse = "/(COURSE TOTAL:[\s\S]*?(?=[A-Z]))|(DEPARTMENT TOTAL:)/"
         regexCleanPercentages = "/([0-9]+\.[0-9]+[%]\\n)/"
         regexCleanHeaders = "/^[\s\S]*?(?=[A-Z]{4}-[0-9]{3}-[0-9]{3})/"
         ```
