@@ -3,6 +3,14 @@ import csv
 import os
 import urllib2
 import sys
+
+import plotly.plotly as py
+import plotly.graph_objs as go
+import plotly.figure_factory as FF
+
+import numpy as np
+import pandas as pd
+
 from PyPDF2 import PdfFileReader
 
 def parsePDF(path):
@@ -25,6 +33,7 @@ def parsePDF(path):
         pdf = PdfFileReader(f)
         profs = []
         courses = []
+        grades = []
         gpa =[]
         for i in range(pdf.numPages):
             page = pdf.getPage(i)
@@ -40,14 +49,14 @@ def parsePDF(path):
                 # Group each data type into lists
                 profs += extractProf(text)
                 courses += extractCourses(text)
-                # grades = extractGrades(text)
+                grades += extractGrades(text)
                 gpa += extractGPA(text)
-                # print(text)
+                print(text)
 
         # Output lists to CSV
         outputCSV(profs, courses, gpa)
         os.remove(path)
-        # sortData()
+        # graphData()
 
 
 def isNotEmpty(text):
@@ -58,7 +67,7 @@ def isNotEmpty(text):
 
 def cleanText(text):
     # Remove Course Total statistics
-    regex = "(COURSE TOTAL:[\s\S]*?(?=[A-Z]))|(DEPARTMENT TOTAL:[\s\S]*(?![A-Z]))"
+    regex = "(COURSE TOTAL:[\s\S]*?(?=[A-Z]|$))|(DEPARTMENT TOTAL:[\s\S]*(?![A-Z]|$))"
     output = re.sub(regex, '', text)
     regex = "([0-9]+\.[0-9]+[%]\\n)"
     output = re.sub(regex, '', output)
@@ -72,7 +81,7 @@ def cleanHeader(text):
     return output
 
 def extractCourses(text):
-    regex = "([A-Z]{4}-[0-9]{3}-[0-9]{3})+"
+    regex = "([A-Z]{4}-[0-9]{3}-[0-9]{3}|ENGR-112-M01)"
     output = re.findall(regex, text)
     # print(output)
     return output
@@ -90,7 +99,7 @@ def extractGPA(text):
     return output
 
 def extractProf(text):
-    regex = "(?<=\\n)[A-Z ]+(?=\\n)"
+    regex = "(?<=\\n)[A-Z- ]+(?=\\n)"
     output = re.findall(regex, text)
     # print(output)
     return output
@@ -103,6 +112,11 @@ def outputCSV(profs, courses, gpa):
         data_writer.writerow(profs)
         # data_writer.writerow(grades)
         data_writer.writerow(gpa)
+
+def graphData():
+    df = pd.read_csv('data.csv')
+    data_table = FF.create_table(df.head())
+    py.iplot(data_table, filename='data-table')
 
 def sortData():
     with open('data.csv', mode='rb') as csv_file:
