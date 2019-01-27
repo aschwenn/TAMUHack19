@@ -1,12 +1,26 @@
 import re
 import csv
 import os
+import urllib2
+import sys
 from PyPDF2 import PdfFileReader
 
 def parsePDF(path):
     # Clean old data file
     if os.path.exists('data.csv'):
         os.remove('data.csv')
+    # Fetch new PDF
+    if os.path.exists(path):
+        os.remove(path)
+    regex = "[0-9]{5}"
+    year = ''.join(re.findall(regex, path))
+    url = 'http://web-as.tamu.edu/gradereport/PDFReports/' + year + '/' + path
+    response = urllib2.urlopen(url)
+    with open(path, 'wb') as f:
+        while True:
+            content = response.read()
+            if not content: break
+            f.write(content)
     with open(path, 'rb') as f:
         pdf = PdfFileReader(f)
         profs = []
@@ -32,6 +46,7 @@ def parsePDF(path):
 
         # Output lists to CSV
         outputCSV(profs, courses, gpa)
+        os.remove(path)
         # sortData()
 
 
@@ -118,5 +133,5 @@ def sortData():
 
 
 if __name__ == '__main__':
-    path = 'grd20181EN.pdf'
+    path = sys.argv[1]
     parsePDF(path)
