@@ -42,19 +42,22 @@ app.get('/', (req, res) => {
     res.send('Howdy!');
 });
 app.post('/courseQuery/', (req, res) => {
+    console.log(req.body);
     if (!req.body.dept || !req.body.course){
         res.status(400).send('400 Error!');
     }
     console.log('Course request for ' + req.body.dept + ' ' + req.body.course);
 
-    let sql = `SELECT * FROM 'Classes' WHERE Class_Dept='` + req.body.dept + `' AND Course_No='` + req.body.course + `'`;
+    let sql = `SELECT * FROM Classes WHERE Class_Dept='` + req.body.dept + `' AND Course_No='` + req.body.course + `'`;
     db.query(sql, (err, result, fields) => {
+        console.log('first query');
         if (err) throw err;
 
-        if (result.length != 1) return []; // course not found or incorrectly stored
+        console.log(result);
+        if (result.length == 0) res.send([]); // course not found or incorrectly stored
 
-        let classId = result[0].Class_id;        
-        let sql2 = `SELECT * FROM 'Sections' WHERE Class_id='` + classId + `'`;
+        let classId = result[0].Class_id;
+        let sql2 = `SELECT * FROM Sections WHERE Class_id='` + classId + `'`;
         db.query(sql2, (err2, result2, fields2) => {
             if (err2) throw err2;
 
@@ -62,7 +65,7 @@ app.post('/courseQuery/', (req, res) => {
             result2.forEach(sec => {
 
                 let profId = sec.Instructor_ID;
-                let sql3 = `SELECT * FROM 'Professors' WHERE Prof_id='` + profId + `'`;
+                let sql3 = `SELECT * FROM Professors WHERE Prof_id='` + profId + `'`;
                 db.query(sql3, (err3, result3, fields3) => {
                     if (err3) throw err3;
 

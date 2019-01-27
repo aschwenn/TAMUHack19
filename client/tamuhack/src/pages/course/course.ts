@@ -27,8 +27,8 @@ export class CoursePage {
       let existsIndex = 0;
       for(let j = 0; j < consolidated.length; j++){
         if(this.data[i].term == consolidated[j].term){
-          if(this.data[i].course == consolidated[j].course){
-            if(this.data[i].dept == consolidated[j].dept){
+          if(this.data[i].prof_firstname == consolidated[j].prof_firstname){
+            if(this.data[i].prof_lastname == consolidated[j].prof_lastname){
               exists = true;
               existsIndex = j;
               break;
@@ -89,16 +89,13 @@ export class CoursePage {
   }
 
   truncate(term: string): string {
-    console.log(term);
     return term[0] + term[1] + term[2] + term[3];
   }
 
   createStyle(gpa): object {
-    console.log('called');
     let s = "6px solid ";
     let val = (Math.abs((gpa * gpa) - 2)  / 14) * 70 + 30;
     s += 'hsl(' + String(val) + ', 100%, 40%)';
-    console.log({"border-top":s});
     return {"border-top":s};
   }
 

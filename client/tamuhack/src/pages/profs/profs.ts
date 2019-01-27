@@ -73,8 +73,46 @@ export class ProfsPage {
       U: 0,
       Q: 1,
       X: 0
+    },
+    {
+      dept: 'CSCE',
+      course: '221',
+      section: '200',
+      term: '20181',
+      prof_firstname: 'T',
+      prof_lastname: 'LEYK',
+      A: 28,
+      B: 2,
+      C: 0,
+      D: 0,
+      F: 0,
+      GPA: 3.933,
+      I: 0,
+      S: 0,
+      U: 0,
+      Q: 0,
+      X: 0
+    },
+    {
+      dept: 'CSCE',
+      course: '221',
+      section: '501',
+      term: '20181',
+      prof_firstname: 'T',
+      prof_lastname: 'LEYK',
+      A: 7,
+      B: 3,
+      C: 1,
+      D: 0,
+      F: 0,
+      GPA: 3.545,
+      I: 0,
+      S: 0,
+      U: 0,
+      Q: 1,
+      X: 0
     }
-  ];
+  ]
 
   constructor(public navCtrl: NavController, private http: HttpClient, private alertCtrl: AlertController) {
 
