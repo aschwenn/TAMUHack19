@@ -26,9 +26,9 @@ export class CoursePage {
       let exists = false;
       let existsIndex = 0;
       for(let j = 0; j < consolidated.length; j++){
-        if(true){
-          if(this.data[i].prof_firstname == consolidated[j].prof_firstname){
-            if(this.data[i].prof_lastname == consolidated[j].prof_lastname){
+        if(this.data[i].term == consolidated[j].term){
+          if(this.data[i].course == consolidated[j].course){
+            if(this.data[i].dept == consolidated[j].dept){
               exists = true;
               existsIndex = j;
               break;
@@ -47,7 +47,6 @@ export class CoursePage {
           insertIndex += 1;
         }
         let temp = this.data[i];
-        temp.term = 1;
         consolidated.splice(insertIndex, 0, temp);
       }
       else{
@@ -73,7 +72,6 @@ export class CoursePage {
         consolidated[existsIndex].U += temp.U;
         consolidated[existsIndex].Q += temp.Q;
         consolidated[existsIndex].X += temp.X;
-        consolidated[existsIndex].term += 1; // increment term -- use as number of sections taught
       }
     }
 
@@ -91,7 +89,8 @@ export class CoursePage {
   }
 
   truncate(term: string): string {
-    return term.substring(0,4);
+    console.log(term);
+    return term[0] + term[1] + term[2] + term[3];
   }
 
 }

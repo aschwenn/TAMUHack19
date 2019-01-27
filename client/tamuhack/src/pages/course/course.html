@@ -11,9 +11,9 @@
   <ion-list *ngFor='let sec of newData'>
     <ion-card>
       <ion-card-header>
-        <ion-card-title [hidden]='!(sec.term[4] == 1)'>Spring {{ truncate(sec.term) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
-        <ion-card-title [hidden]='!(sec.term[4] == 2)'>Summer {{ truncate(sec.term) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
-        <ion-card-title [hidden]='!(sec.term[4] == 3)'>Fall {{ truncate(sec.term) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+        <ion-card-title [hidden]='!(sec.term[4] == 1)'>Spring {{ sec.term.substring(0,4) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+        <ion-card-title [hidden]='!(sec.term[4] == 2)'>Summer {{ sec.term.substring(0,4) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+        <ion-card-title [hidden]='!(sec.term[4] == 3)'>Fall {{ sec.term.substring(0,4) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
       </ion-card-header>
       <ion-card-content style="color:black">
         Average GPA: {{ sec.GPA }}<br />

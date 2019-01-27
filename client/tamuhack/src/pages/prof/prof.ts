@@ -24,13 +24,11 @@ export class ProfPage {
       let exists = false;
       let existsIndex = 0;
       for(let j = 0; j < consolidated.length; j++){
-        if(this.data[i].term == consolidated[j].term){
-          if(this.data[i].course == consolidated[j].course){
-            if(this.data[i].dept == consolidated[j].dept){
-              exists = true;
-              existsIndex = j;
-              break;
-            }
+        if(this.data[i].prof_firstname == consolidated[j].prof_firstname){
+          if(this.data[i].prof_lastname == consolidated[j].prof_lastname){
+            exists = true;
+            existsIndex = j;
+            break;
           }
         }
       }
@@ -44,6 +42,8 @@ export class ProfPage {
           }
           insertIndex += 1;
         }
+        let temp = this.data[i];
+        temp.term = 1;
         consolidated.splice(insertIndex, 0, this.data[i]);
       }
       else{
@@ -69,6 +69,7 @@ export class ProfPage {
         consolidated[existsIndex].U += temp.U;
         consolidated[existsIndex].Q += temp.Q;
         consolidated[existsIndex].X += temp.X;
+        consolidated[existsIndex].term += 1; // increment term -- use as number of sections taught
       }
     }
 
@@ -83,6 +84,14 @@ export class ProfPage {
 
   totalStudents(sec): number {
     return sec.A + sec.B + sec.C + sec.D + sec.F + sec.I + sec.S + sec.U + sec.Q + sec.X;
+  }
+
+  createStyle(sec): object {
+    console.log('called');
+    let s = "6px solid ";
+    s += "green";
+    console.log({"border-top":s});
+    return {"border-top":s};
   }
 
 }

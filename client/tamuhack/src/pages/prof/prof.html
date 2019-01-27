@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list *ngFor='let sec of newData'>
-    <ion-card>
+  <ion-card [ngStyle]='createStyle(sec.GPA)'>
       <ion-card-header>
         <ion-card-title>{{ sec.dept }}-{{ sec.course }} </ion-card-title>
       </ion-card-header>
