@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Courses
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)='searchClass()' class='vertical-center' padding>
+    <ion-item class='semi'>
+      <ion-label>Department</ion-label>
+      <ion-input type='text' minLength='4' maxLength='4' [(ngModel)]='dept' required name='dept'></ion-input>
+    </ion-item>
+    <ion-item class='semi'>
+      <ion-label>Course Number</ion-label>
+      <ion-input type='text' minLength='3' maxLength='3' [(ngModel)]='courseno' required name='courseno'></ion-input>
+    </ion-item>
+    <button ion-button class='submit' type='submit' block>Search Classes</button>
+  </form>
+
+</ion-content>

@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ course }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list *ngFor='let sec of newData'>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title [hidden]='!(sec.term[4] == 1)'>Spring {{ truncate(sec.term) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+        <ion-card-title [hidden]='!(sec.term[4] == 2)'>Summer {{ truncate(sec.term) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+        <ion-card-title [hidden]='!(sec.term[4] == 3)'>Fall {{ truncate(sec.term) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+      </ion-card-header>
+      <ion-card-content style="color:black">
+        Average GPA: {{ sec.GPA }}<br />
+        Total Students: {{ totalStudents(sec) }}<br />
+        {{ sec.A }} A's, {{ sec.B }} B's, {{ sec.C }} C's, {{ sec.D }} D's, {{ sec.F }} F's<br />
+        {{ sec.Q }} Q-drops
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>
