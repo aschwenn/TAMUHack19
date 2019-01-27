@@ -8,6 +8,18 @@ var prompt = require('prompt');
 
 console.log('Hello, World!');
 
+var db = mysql.createConnection({
+    host:   '23.229.190.133',
+    port:   '3306',
+    user:   'manofthekinfolk',
+    password:   process.env.PASSWORD || 'al19as19dk19ke19',
+    database:   'TAMUHackClass'
+})
+db.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to the database!');
+})
+
 // Initialize express server
 var app = express();
 
@@ -29,8 +41,56 @@ app.get('/', (req, res) => {
     console.log('Homepage visited.');
     res.send('Howdy!');
 });
-app.get('/courseQuery/', (req, res) => {
-    res.send('test');
+app.post('/courseQuery/', (req, res) => {
+    if (!req.body.dept || !req.body.course){
+        res.status(400).send('400 Error!');
+    }
+    console.log('Course request for ' + req.body.dept + ' ' + req.body.course);
+
+    let sql = `SELECT * FROM 'Classes' WHERE Class_Dept='` + req.body.dept + `' AND Course_No='` + req.body.course + `'`;
+    db.query(sql, (err, result, fields) => {
+        if (err) throw err;
+
+        if (result.length != 1) return []; // course not found or incorrectly stored
+
+        let classId = result[0].Class_id;        
+        let sql2 = `SELECT * FROM 'Sections' WHERE Class_id='` + classId + `'`;
+        db.query(sql2, (err2, result2, fields2) => {
+            if (err2) throw err2;
+
+            var json = [];
+            result2.forEach(sec => {
+
+                let profId = sec.Instructor_ID;
+                let sql3 = `SELECT * FROM 'Professors' WHERE Prof_id='` + profId + `'`;
+                db.query(sql3, (err3, result3, fields3) => {
+                    if (err3) throw err3;
+
+                    if (results3.length == 0) return []; // prof not found
+
+                    j = {
+                        section: sec.Section_Name,
+                        term: sec.Section_Term,
+                        prof_firstname: results3[0].Prof_FirstName,
+                        prof_lastname: results3[0].Prof_LastName,
+                        A: sec.A_Grade,
+                        B: sec.B_Grade,
+                        C: sec.C_Grade,
+                        D: sec.D_Grade,
+                        F: sec.F_Grade,
+                        GPA: sec.GPA,
+                        I: sec.I_Grade,
+                        S: sec.S_Grade,
+                        U: sec.U_Grade,
+                        Q: sec.Q_Grade,
+                        X: sec.X_Grade
+                    }
+                    json.push(j);
+                });            
+            });
+        });
+        res.send(json);
+    });
 });
 
 // Start server on port 8080
