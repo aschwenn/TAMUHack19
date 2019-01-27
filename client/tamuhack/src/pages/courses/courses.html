@@ -7,16 +7,16 @@
 </ion-header>
 
 <ion-content>
-  <form #form="ngForm" (ngSubmit)='searchClass()' class='vertical-center' padding>
+  <form #f="ngForm" (ngSubmit)='searchClass()' class='vertical-center' padding>
     <ion-item class='semi'>
       <ion-label>Department</ion-label>
-      <ion-input type='text' minLength='4' maxLength='4' [(ngModel)]='dept' required name='dept'></ion-input>
+      <ion-input type='text' minlength='4' maxLength='4' [(ngModel)]='dept' required name='dept'></ion-input>
     </ion-item>
     <ion-item class='semi'>
       <ion-label>Course Number</ion-label>
-      <ion-input type='text' minLength='3' maxLength='3' [(ngModel)]='courseno' required name='courseno'></ion-input>
+      <ion-input type='text' minlength='3' maxLength='3' [(ngModel)]='courseno' required name='courseno'></ion-input>
     </ion-item>
-    <button ion-button class='submit' type='submit' block>Search Classes</button>
+    <button ion-button class='submit' type='submit' block [disabled]="!f.valid">Search Classes</button>
   </form>
 
 </ion-content>
