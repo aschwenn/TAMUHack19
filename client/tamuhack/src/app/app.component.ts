@@ -11,7 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 export class MyApp {
   rootPage:any = TabsPage;
 
-  static URL: string = ''; // URL of backend
+  static URL: string = 'localhost:8080'; // URL of backend
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
