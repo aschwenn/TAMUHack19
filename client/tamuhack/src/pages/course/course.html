@@ -8,5 +8,14 @@
 
 
 <ion-content padding>
-
+  <ion-list *ngFor='let sec of newData'>
+    <ion-card>
+      <ion-card-header>
+      <ion-card-title>{{ sec.term }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
+      </ion-card-header>
+      <ion-card-content style="color:black">
+        Average GPA: {{ sec.GPA }}
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
