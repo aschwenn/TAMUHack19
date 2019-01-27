@@ -3,17 +3,20 @@ import csv
 import os
 import urllib2
 import sys
-
-import plotly.plotly as py
-import plotly.graph_objs as go
-import plotly.figure_factory as FF
-
-import numpy as np
-import pandas as pd
-
+import mysql.connector
 from PyPDF2 import PdfFileReader
 
 def parsePDF(path):
+    # DATABASE CONNECTION
+    mydb = mysql.connector.connect(
+        host='23.229.190.133',
+        port='3306',
+        user='manofthekinfolk',
+        password='al19as19dk19ke19',
+        database='TAMUHackClass'
+    )
+    mycursor = mydb.cursor()
+
     # Clean old data file
     if os.path.exists('data.csv'):
         os.remove('data.csv')
@@ -34,7 +37,7 @@ def parsePDF(path):
         profs = []
         courses = []
         grades = []
-        gpa =[]
+        gpa = []
         for i in range(pdf.numPages):
             page = pdf.getPage(i)
             # print('Page type : {}'.format(str(type(page))))
@@ -48,15 +51,79 @@ def parsePDF(path):
                 text = cleanHeader(text)
                 # Group each data type into lists
                 profs += extractProf(text)
+                profsSQL = extractProf(text)
                 courses += extractCourses(text)
-                grades += extractGrades(text)
+                coursesSQL = extractCourses(text)
+                # grades += extractGrades(text)
+                gradeSQL = extractGrades(text)
                 gpa += extractGPA(text)
-                print(text)
+                gpaSQL = extractGPA(text)
 
-        # Output lists to CSV
-        outputCSV(profs, courses, gpa)
-        os.remove(path)
-        # graphData()
+                for i in range(len(profsSQL)):
+                    s = profsSQL[i]
+                    lastName = s.rsplit(' ', 1)[0]
+                    firstName = s.rsplit(' ', 1)[1]
+
+                    sql = "INSERT INTO Professors (Prof_id, Prof_FirstName, Prof_LastName) VALUES (null, %s, %s)"
+                    val = (firstName, lastName)
+                    mycursor.execute(sql, val)
+
+                    mydb.commit()
+
+                    print(mycursor.rowcount, "record inserted.")
+
+                for i in range(len(coursesSQL)):
+                    c = coursesSQL[i]
+                    dept = c[0:4]
+                    courseNum = c[5:8]
+
+                    print dept
+                    print courseNum
+
+                    sql = "INSERT INTO Classes (Class_id, Class_Dept, Course_No) VALUES (null, %s, %s)"
+                    val = (dept, courseNum)
+                    mycursor.execute(sql, val)
+
+                    mydb.commit()
+
+                    print(mycursor.rowcount, "record inserted.")
+
+                for i in range(len(coursesSQL)):
+                    c = coursesSQL[i]
+                    dept = c[0:4]
+                    courseNum = c[5:8]
+                    sectionNum = c[9:12]
+                    gpaQ = gpaSQL[i]
+
+                    # for j in range(len(gradeSQL)):
+
+                    aGrade = gradeSQL[i*12]
+                    bGrade = gradeSQL[i*12+1]
+                    cGrade = gradeSQL[i*12+2]
+                    dGrade = gradeSQL[i*12+3]
+                    fGrade = gradeSQL[i*12+4]
+                    iGrade = gradeSQL[i*12+6]
+                    sGrade = gradeSQL[i*12+7]
+                    uGrade = gradeSQL[i*12+8]
+                    qGrade = gradeSQL[i*12+9]
+                    xGrade = gradeSQL[i*12+10]
+
+                    sql = "INSERT INTO Sections (Section_ID, Section_Name, Course_Num, Section_Num, Instructor_ID, A_Grade, " \
+                          "B_Grade, C_Grade, D_Grade, F_Grade, GPA, I_Grade, S_Grade, U_Grade, Q_Grade, X_Grade, " \
+                          "Section_year, Section_term, Class_id) VALUES (null, %s, %s, %s, 001, %s, %s, %s, %s, %s, %s, %s, %s, %s," \
+                          "%s, %s, %s, %s, 001)"
+                    val = (dept, courseNum, sectionNum, aGrade, bGrade, cGrade, dGrade, fGrade, gpaQ, iGrade, sGrade, uGrade, qGrade, xGrade, 2018, "Spring")
+
+                    mycursor.execute(sql, val)
+
+                    mydb.commit()
+
+                    print(mycursor.rowcount, "record inserted.")
+
+            # Output lists to CSV
+            outputCSV(profs, courses, gpa)
+            # os.remove(path)
+            # graphData()
 
 
 def isNotEmpty(text):
@@ -113,11 +180,12 @@ def outputCSV(profs, courses, gpa):
         # data_writer.writerow(grades)
         data_writer.writerow(gpa)
 
-def graphData():
-    df = pd.read_csv('data.csv')
-    data_table = FF.create_table(df.head())
-    py.iplot(data_table, filename='data-table')
+#def graphData():
+#    df = pd.read_csv('data.csv')
+#    data_table = FF.create_table(df.head())
+#    py.iplot(data_table, filename='data-table')
 
+'''
 def sortData():
     with open('data.csv', mode='rb') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -144,7 +212,7 @@ def sortData():
 
                 temp += row[i]
                 print temp
-
+'''
 
 if __name__ == '__main__':
     path = sys.argv[1]
