@@ -86,10 +86,11 @@ export class ProfPage {
     return sec.A + sec.B + sec.C + sec.D + sec.F + sec.I + sec.S + sec.U + sec.Q + sec.X;
   }
 
-  createStyle(sec): object {
+  createStyle(gpa): object {
     console.log('called');
     let s = "6px solid ";
-    s += "green";
+    let val = (Math.abs((gpa * gpa) - 2)  / 14) * 70 + 30;
+    s += 'hsl(' + String(val) + ', 100%, 40%)';
     console.log({"border-top":s});
     return {"border-top":s};
   }

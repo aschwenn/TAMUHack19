@@ -93,4 +93,13 @@ export class CoursePage {
     return term[0] + term[1] + term[2] + term[3];
   }
 
+  createStyle(gpa): object {
+    console.log('called');
+    let s = "6px solid ";
+    let val = (Math.abs((gpa * gpa) - 2)  / 14) * 70 + 30;
+    s += 'hsl(' + String(val) + ', 100%, 40%)';
+    console.log({"border-top":s});
+    return {"border-top":s};
+  }
+
 }

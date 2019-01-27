@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-list *ngFor='let sec of newData'>
-    <ion-card>
+    <ion-card [ngStyle]='createStyle(sec.GPA)'>
       <ion-card-header>
         <ion-card-title [hidden]='!(sec.term[4] == 1)'>Spring {{ sec.term.substring(0,4) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
         <ion-card-title [hidden]='!(sec.term[4] == 2)'>Summer {{ sec.term.substring(0,4) }} - {{ sec.prof_lastname }}, {{ sec.prof_firstname }} </ion-card-title>
