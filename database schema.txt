@@ -1,6 +1,6 @@
 /* "Current" classes for the scheduler */
 Classes {
-	id: int, primary key, not null, auto-increment
+	Classid: int, primary key, not null, auto-increment
 	name: varchar, not null
 	dept: varchar, not null
 	courseNo: int, not null
@@ -14,7 +14,7 @@ Classes {
 }
 
 Sections {
-	id: int, primary key, not null, auto-increment
+	Sectionid: int, primary key, not null, auto-increment
 	section: int, not null
 	crn: int, not null
 	honors: boolean, not null
@@ -28,7 +28,7 @@ Sections {
 }
 
 MeetingTimes {
-	id: int, primary key, not null, auto-increment
+	MeetingTime_id: int, primary key, not null, auto-increment
 	type: varchar
 	startTime: varchar
 	endTime: varchar
@@ -39,40 +39,52 @@ MeetingTimes {
 }
 
 /* Historical classes for analytics */
-PrevClasses {
-	id: int, primary key, not null, auto-increment
-	name: varchar, not null
-	dept: varchar, not null
+
+Create Schema Classes
+Use Classes;
+
+create table Classes(
+	Classesid: int primary key not null auto-increment,
+	Class_name: varchar, not null
+	Class_dept: varchar, not null
 	courseNo: int, not null
-	sections: list of ints --list of keys from PrevSections table
+	Sections: list of ints --list of keys from PrevSections table
 	term: varchar, not null
 	campus: varchar
-}
+	constraint Classes_PK primary key(Classesid),
+	constraint Classes_FK foreign key(Sections) references(Section_id));
 
-PrevSections {
-	id: int, primary key, not null, auto-increment
-	section: int, not null
+create table Sections (
+	Section_id: int, primary key, not null, auto-increment
+	section_name: int, not null
 	honors: boolean, not null
-	instructorPrimary: int, not null --id from Professors table
-	instructorsSecondary: list of ints, not null --id from Professors table
-	A: int, not null
-	B: int, not null
-	C: int, not null
-	D: int, not null
-	F: int, not null
+	instructor_Primary_id: int, not null 
+	instructors_Secondary_id: int, not null
+	A_Grade: int not null,
+	B_Grade: int not null,
+	C_Grade: int not null,
+	D_Grade: int not null,
+	F_Grade: int not null,
 	GPA: float, not null
-	I: int, not null
-	S: int, not null
-	U: int, not null
-	Q: int, not null
+	I_Grade: int, not null
+	S_Grade: int, not null
+	U_Grade: int, not null
+	Q_Grade: int, not null
 	X: int, not null
-	total: int, not null
+	total_people: int, not null (maybe)
 	term: varchar, not null
-}
+	year: int, not null
 
-Professors {
-	id: int, primary key, not null, auto-increment
-	firstName: varchar
-	middleName: varchar
-	lastName: varchar
-}
+	constraint Sections_PK primary key(Section_id),
+	constraint Sections_FK foreign key(Prof_id) references(instructor_Primary_id)
+	constraint Sections_FK foreign key(Prof_id) references(instructor_Secondary_id)
+	constraint Sections_FK foreign key(Prof_id) references(instructor_Secondary)
+	constraint Sections_FK foreign key(Prof_id) references(instructor_Secondary)
+	constraint Sections_FK foreign key(Sections) references(Section_id));
+
+create table Professors (
+	Prof_id: int, primary key, not null, auto-increment
+	Prof_firstName: varchar(30)
+	Prof_middleName: varchar(40)
+	Prof_lastName: varchar(40) notnull
+	constraint Professors_PK primary key(Section_id));
